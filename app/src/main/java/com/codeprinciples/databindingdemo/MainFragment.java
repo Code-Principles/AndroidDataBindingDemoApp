@@ -1,11 +1,13 @@
 package com.codeprinciples.databindingdemo;
 
-import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.codeprinciples.databindingdemo.databinding.ActivityMainBinding;
-
+import com.codeprinciples.databindingdemo.databinding.FragmentMainBinding;
 
 /**
  * MIT License
@@ -31,12 +33,18 @@ import com.codeprinciples.databindingdemo.databinding.ActivityMainBinding;
  * SOFTWARE.
  */
 
-public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding mBinding;
+public class MainFragment extends Fragment {
+    private FragmentMainBinding mBinding;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        mBinding.textView.setText("Hello Data Binding World!");
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mBinding = FragmentMainBinding.inflate(inflater,container,false);
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mBinding.textView.setText("Hello From Fragment!");
     }
 }
