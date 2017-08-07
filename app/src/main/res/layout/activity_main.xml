@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="productModel"
+            type="com.codeprinciples.databindingdemo.model.ProductModel"/>
+        <variable
+            name="productPresenter"
+            type="com.codeprinciples.databindingdemo.presenter.ProductPresenter"/>
+        <import type="com.codeprinciples.databindingdemo.util.AppUtils"/>
+
+    </data>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/productName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <fragment
-            android:id="@+id/mainFragment"
-            android:name="com.codeprinciples.databindingdemo.MainFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/textView"/>
+            android:layout_height="wrap_content"
+            android:text="@{productModel.name}"/>
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/productName"
+            android:text="@{AppUtils.moneyFormat(productModel.price)}"/>
+        <EditText
+            android:id="@+id/productQuantity"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productPrice"
+            android:text="@={String.valueOf(productModel.quantity)}"/>
+        <Button
+            android:id="@+id/buyProductButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/productQuantity"
+            android:text='@{productModel==null?"Load Model":"Buy Product"}'
+            android:onClick="@{(v) -> productModel==null? productPresenter.onProductLoadRequest() : productPresenter.onProductBuyRequest(productModel)}"/>
     </RelativeLayout>
 </layout>
+

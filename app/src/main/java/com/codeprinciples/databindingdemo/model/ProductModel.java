@@ -1,14 +1,4 @@
-package com.codeprinciples.databindingdemo;
-
-import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Toast;
-
-import com.codeprinciples.databindingdemo.databinding.ActivityMainBinding;
-import com.codeprinciples.databindingdemo.model.ProductModel;
-import com.codeprinciples.databindingdemo.presenter.ProductPresenter;
-
+package com.codeprinciples.databindingdemo.model;
 
 /**
  * MIT License
@@ -34,24 +24,14 @@ import com.codeprinciples.databindingdemo.presenter.ProductPresenter;
  * SOFTWARE.
  */
 
-public class MainActivity extends AppCompatActivity implements ProductPresenter {
-    private ActivityMainBinding mBinding;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        mBinding.setProductPresenter(this);
-    }
+public class ProductModel {
+    public String name;
+    public float price;
+    public int quantity;
 
-    @Override
-    public void onProductBuyRequest(ProductModel productModel) {
-        mBinding.setProductModel(null);
-        Toast.makeText(this, "Product purchased", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onProductLoadRequest() {
-        ProductModel productModel = new ProductModel("Banana",0.25f,300);
-        mBinding.setProductModel(productModel);
+    public ProductModel(String name, float price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
     }
 }
