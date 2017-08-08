@@ -1,5 +1,12 @@
 package com.codeprinciples.databindingdemo.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.util.Log;
+
+import com.codeprinciples.databindingdemo.BR;
+import com.codeprinciples.databindingdemo.util.AppUtils;
+
 /**
  * MIT License
  * <p>
@@ -24,14 +31,49 @@ package com.codeprinciples.databindingdemo.model;
  * SOFTWARE.
  */
 
-public class ProductModel {
-    public String name;
-    public float price;
-    public int quantity;
+public class ProductModel  extends BaseObservable {
+    private String name;
+    private float price;
+    private int quantity;
 
     public ProductModel(String name, float price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    @Bindable
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+    }
+
+    @Bindable
+    public String getPrice() {
+        return AppUtils.moneyFormat(price);
+    }
+
+    public void setPrice(String price) {
+        this.price = Float.valueOf(price.replace("$",""));
+        notifyPropertyChanged(BR.price);
+    }
+
+    @Bindable
+    public String getQuantity() {
+        return String.valueOf(quantity);
+    }
+
+    public void setQuantity(String quantity) {
+        try {
+            this.quantity = Integer.valueOf(quantity);
+            notifyPropertyChanged(BR.quantity);
+        }catch (NumberFormatException e){
+            Log.i("ProductModel", quantity+" is not a valid number");
+        }
+
     }
 }
